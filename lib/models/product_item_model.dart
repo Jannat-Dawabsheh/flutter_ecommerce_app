@@ -21,7 +21,7 @@ List<ProductItemModel> dummyProducts=[
   ProductItemModel(
     id: '1', 
     name: 'T-shirt', 
-    imgUrl: 'https://www.freepnglogos.com/uploads/t-shirt-png/t-shirt-png-blank-shirt-transparent-png-pictures-icons-and-28.png', 
+    imgUrl: 'https://static.vecteezy.com/system/resources/thumbnails/008/847/318/small/isolated-black-t-shirt-front-free-png.png', 
     price: 10, 
     category: 'Clothes'
     ),
@@ -37,7 +37,7 @@ List<ProductItemModel> dummyProducts=[
     ProductItemModel(
     id: '3', 
     name: 'black shoes', 
-    imgUrl: 'https://pngimg.com/uploads/men_shoes/men_shoes_PNG7475.png', 
+    imgUrl: 'https://static.wixstatic.com/media/3fa4d8_1c395487f90e4138abb19cf29055c821~mv2.png/v1/fit/w_900%2Ch_700%2Cal_c/file.png', 
     price: 15, 
     category: 'shoes'
     ),
@@ -45,7 +45,7 @@ List<ProductItemModel> dummyProducts=[
     ProductItemModel(
     id: '4', 
     name: 'black pag', 
-    imgUrl: 'https://pngimg.com/uploads/women_bag/women_bag_PNG6415.png', 
+    imgUrl: 'https://eng.polene-paris.com/cdn/shop/products/packshot-front_numero-sept-mini-noir-lisse.png?v=1682352228', 
     price: 10, 
     category: 'pags'
     ),

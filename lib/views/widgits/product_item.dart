@@ -13,8 +13,8 @@ class ProductItem extends StatelessWidget {
         Stack(
           children: [
             Container(
-              width: 150,
-              height: 100,
+              width: 200,
+              height: 150,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
                 color: Colors.grey.shade200,
