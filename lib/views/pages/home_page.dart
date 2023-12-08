@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:flutter_ecommerce_app/models/home_carousel_model.dart';
 import 'package:flutter_ecommerce_app/utils/app_colors.dart';
+import 'package:flutter_ecommerce_app/view_models/category_cubit/category_cubit.dart';
 import 'package:flutter_ecommerce_app/views/widgits/category_tab_view.dart';
 import 'package:flutter_ecommerce_app/views/widgits/home_tab_view.dart';
 
@@ -80,7 +82,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               TabBar(
                 controller: _tabController,
                 unselectedLabelColor: AppColors.grey,
-                tabs:[
+                tabs:const [
                  Tab(
                   text: 'Home',
                  ),
@@ -97,8 +99,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   controller: _tabController,
                   children:[
                     HomeTabView(),
-                    CategoryTabView(),
-                  ] 
+                     BlocProvider(
+                       create: (context) {
+                      final cubit=CategoryCubitCubit();
+                      cubit.getCategoryData();
+                      return cubit;
+                    },
+                    child: const CategoryTabView(),
+                  ),
+                  ],
                 ),
               ),
             ],
