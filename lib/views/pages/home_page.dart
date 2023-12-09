@@ -9,6 +9,7 @@ import 'package:flutter_ecommerce_app/views/widgits/category_tab_view.dart';
 import 'package:flutter_ecommerce_app/views/widgits/home_tab_view.dart';
 
 import '../../models/product_item_model.dart';
+import '../../utils/app_routes.dart';
 import '../widgits/product_item.dart';
 
 class HomePage extends StatefulWidget {
@@ -67,7 +68,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
                  Row(children: [
                         IconButton(
-                          onPressed: (){}, 
+                          onPressed: (){
+                             Navigator.of(context,rootNavigator: true).pushNamed(AppRoutes.SearchPage,);
+                          }, 
                           icon: const Icon(Icons.search)),
 
                           IconButton(

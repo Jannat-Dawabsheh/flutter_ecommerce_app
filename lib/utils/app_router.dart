@@ -6,6 +6,7 @@ import 'package:flutter_ecommerce_app/view_models/product_cubit/product_cubit.da
 import 'package:flutter_ecommerce_app/views/pages/custom_buttom_navbar.dart';
 import 'package:flutter_ecommerce_app/views/pages/home_page.dart';
 import 'package:flutter_ecommerce_app/views/pages/product_details_page.dart';
+import 'package:flutter_ecommerce_app/views/pages/search_page.dart';
 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -20,7 +21,11 @@ class AppRouter {
           ),
           settings: settings,
         );
-
+        case AppRoutes.SearchPage:
+        return MaterialPageRoute(
+          builder: (_) => const SearchPage(),
+          settings: settings,
+        );
       case AppRoutes.home:
         return MaterialPageRoute(
           builder: (_) => const CustomBottomNavbar(),
