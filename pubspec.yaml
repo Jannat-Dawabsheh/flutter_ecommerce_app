@@ -16,8 +16,10 @@ dependencies:
   persistent_bottom_nav_bar_v2: ^4.2.8
   flutter_carousel_widget: ^2.1.2
   cached_network_image: ^3.3.0
-
+  flutter_phosphor_icons: ^0.0.1+6
+  equatable: ^2.0.5
   cupertino_icons: ^1.0.2
+  bloc: ^8.1.2
 
 dev_dependencies:
   flutter_test:

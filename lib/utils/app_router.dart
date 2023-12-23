@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecommerce_app/models/product_item_model.dart';
 import 'package:flutter_ecommerce_app/utils/app_routes.dart';
+import 'package:flutter_ecommerce_app/view_models/favorite_cubit/favorite_cubit.dart';
 import 'package:flutter_ecommerce_app/view_models/product_cubit/product_cubit.dart';
 import 'package:flutter_ecommerce_app/views/pages/custom_buttom_navbar.dart';
 import 'package:flutter_ecommerce_app/views/pages/home_page.dart';
@@ -21,14 +22,17 @@ class AppRouter {
           ),
           settings: settings,
         );
-        case AppRoutes.SearchPage:
+      case AppRoutes.SearchPage:
         return MaterialPageRoute(
           builder: (_) => const SearchPage(),
           settings: settings,
         );
       case AppRoutes.home:
         return MaterialPageRoute(
-          builder: (_) => const CustomBottomNavbar(),
+          builder: (_) =>  BlocProvider(
+            create: (context) => FavoriteCubit(),
+            child: CustomBottomNavbar(),
+          ),
           settings: settings,
         );
 

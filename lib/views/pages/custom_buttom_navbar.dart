@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce_app/view_models/favorite_cubit/favorite_cubit.dart';
 import 'package:flutter_ecommerce_app/view_models/home_cubit/home_cubit_cubit.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,6 +21,7 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
   @override
   void initState() {
     _controller = PersistentTabController();
+
     super.initState();
   }
 
@@ -27,7 +29,7 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
     return [
       BlocProvider(
         create: (context) {
-          final cubit=HomeCubitCubit();
+          final cubit = HomeCubitCubit();
           cubit.getHomeData();
           return cubit;
         },

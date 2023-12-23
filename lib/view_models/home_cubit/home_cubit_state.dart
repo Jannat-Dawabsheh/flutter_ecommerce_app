@@ -3,6 +3,8 @@ part of 'home_cubit_cubit.dart';
 @immutable
 sealed class HomeCubitState {
   const HomeCubitState();
+
+  get carouselItems => null;
 }
 
 final class HomeCubitInitial extends HomeCubitState {}

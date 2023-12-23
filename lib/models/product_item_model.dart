@@ -2,7 +2,7 @@ class ProductItemModel{
   final String id;
   final String name;
   final String imgUrl;
-  final bool isFavorite;
+  bool isFavorite;
   final String description;
   final double price;
   final String category;
@@ -23,7 +23,7 @@ List<ProductItemModel> dummyProducts=[
     name: 'T-shirt', 
     imgUrl: 'https://static.vecteezy.com/system/resources/thumbnails/008/847/318/small/isolated-black-t-shirt-front-free-png.png', 
     price: 10, 
-    category: 'Clothes'
+    category: 'Clothes',
     ),
 
     ProductItemModel(
