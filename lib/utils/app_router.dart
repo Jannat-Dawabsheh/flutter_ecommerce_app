@@ -3,13 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecommerce_app/models/product_item_model.dart';
 import 'package:flutter_ecommerce_app/utils/app_routes.dart';
 import 'package:flutter_ecommerce_app/view_models/favorite_cubit/favorite_cubit.dart';
+import 'package:flutter_ecommerce_app/view_models/payment_cubit/payment_cubit.dart';
 import 'package:flutter_ecommerce_app/view_models/product_cubit/product_cubit.dart';
 import 'package:flutter_ecommerce_app/views/pages/custom_buttom_navbar.dart';
 import 'package:flutter_ecommerce_app/views/pages/home_page.dart';
+import 'package:flutter_ecommerce_app/views/pages/payment_page.dart';
 import 'package:flutter_ecommerce_app/views/pages/product_details_page.dart';
 import 'package:flutter_ecommerce_app/views/pages/search_page.dart';
 
 import '../views/pages/my_orders_page.dart';
+
 /*
 
 MultiBlocProvider(
@@ -24,7 +27,7 @@ MultiBlocProvider(
         ],
         child: const HomeScreen(),
       );
-*/ 
+*/
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -42,7 +45,6 @@ class AppRouter {
               ),
             ],
             child: ProductDetailsPage(productItem: productDetailsArguments),
-
           ),
           settings: settings,
         );
@@ -51,14 +53,26 @@ class AppRouter {
           builder: (_) => const SearchPage(),
           settings: settings,
         );
-        case AppRoutes.myOrders:
+      case AppRoutes.myOrders:
         return MaterialPageRoute(
-          builder: (_) =>  MyOrdersPage(),
+          builder: (_) => MyOrdersPage(),
+          settings: settings,
+        );
+      case AppRoutes.payment:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) {
+              final cubit= PaymentCubit();
+              cubit.getPaymentViewData();
+              return cubit;
+            },
+            child: const PaymentPage(),
+          ),
           settings: settings,
         );
       case AppRoutes.home:
         return MaterialPageRoute(
-          builder: (_) =>  BlocProvider(
+          builder: (_) => BlocProvider(
             create: (context) => FavoriteCubit(),
             child: CustomBottomNavbar(),
           ),

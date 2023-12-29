@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dash/flutter_dash.dart';
 import 'package:flutter_ecommerce_app/utils/app_colors.dart';
+import 'package:flutter_ecommerce_app/utils/app_routes.dart';
 import 'package:flutter_ecommerce_app/view_models/cart_cubit/cart_cubit.dart';
 import 'package:flutter_ecommerce_app/views/widgets/cart_item_widget.dart';
 
@@ -57,14 +58,13 @@ class CartPage extends StatelessWidget {
                     width: double.infinity,
                     height: 50,
                     child: ElevatedButton(
-                    onPressed: (){}, 
+                    onPressed: ()=>Navigator.of(context, rootNavigator: true).pushNamed(AppRoutes.payment), 
                     child: Text("Checkout"),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
                       foregroundColor: AppColors.white,
                     ),
-                    ),
-                    
+                    ),  
                   ),
                 ),
                 const SizedBox(height: 32,),
