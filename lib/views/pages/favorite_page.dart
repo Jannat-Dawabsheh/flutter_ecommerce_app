@@ -4,10 +4,10 @@ import 'package:flutter_ecommerce_app/models/category_item._model.dart';
 import 'package:flutter_ecommerce_app/models/product_item_model.dart';
 import 'package:flutter_ecommerce_app/shared/widget_extension.dart';
 import 'package:flutter_ecommerce_app/view_models/favorite_cubit/favorite_cubit.dart';
-import 'package:flutter_ecommerce_app/views/widgits/category_list.dart';
-import 'package:flutter_ecommerce_app/views/widgits/product_item.dart';
+import 'package:flutter_ecommerce_app/views/widgets/category_list.dart';
+import 'package:flutter_ecommerce_app/views/widgets/product_item.dart';
 
-import '../widgits/sarch_bar.dart';
+import '../widgets/sarch_bar.dart';
 
 class FavoritePage extends StatefulWidget {
   const FavoritePage({super.key});

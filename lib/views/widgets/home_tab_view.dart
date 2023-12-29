@@ -4,7 +4,7 @@ import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:flutter_ecommerce_app/utils/app_routes.dart';
 import 'package:flutter_ecommerce_app/view_models/home_cubit/home_cubit_cubit.dart';
 import 'package:flutter_ecommerce_app/views/pages/product_details_page.dart';
-import 'package:flutter_ecommerce_app/views/widgits/product_item.dart';
+import 'package:flutter_ecommerce_app/views/widgets/product_item.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../models/home_carousel_model.dart';
 import '../../models/product_item_model.dart';

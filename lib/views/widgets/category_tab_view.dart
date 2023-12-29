@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecommerce_app/models/category_item._model.dart';
 import 'package:flutter_ecommerce_app/view_models/category_cubit/category_cubit.dart';
-import 'package:flutter_ecommerce_app/views/widgits/category_item.dart';
+import 'package:flutter_ecommerce_app/views/widgets/category_item.dart';
 
 class CategoryTabView extends StatelessWidget {
   const CategoryTabView({super.key});

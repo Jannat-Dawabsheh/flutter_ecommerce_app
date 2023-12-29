@@ -9,6 +9,22 @@ import 'package:flutter_ecommerce_app/views/pages/home_page.dart';
 import 'package:flutter_ecommerce_app/views/pages/product_details_page.dart';
 import 'package:flutter_ecommerce_app/views/pages/search_page.dart';
 
+import '../views/pages/my_orders_page.dart';
+/*
+
+MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => BlocA(),
+          ),
+          BlocProvider(
+            create: (context) => BlocB(),
+          ),
+          BlocProvider(create: (context) => BlocC())
+        ],
+        child: const HomeScreen(),
+      );
+*/ 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -16,15 +32,28 @@ class AppRouter {
         final ProductItemModel productDetailsArguments =
             settings.arguments as ProductItemModel;
         return MaterialPageRoute(
-          builder: (_) => BlocProvider(
-            create: (context) => ProductCubit(),
+          builder: (_) => MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => FavoriteCubit(),
+              ),
+              BlocProvider(
+                create: (context) => ProductCubit(),
+              ),
+            ],
             child: ProductDetailsPage(productItem: productDetailsArguments),
+
           ),
           settings: settings,
         );
       case AppRoutes.SearchPage:
         return MaterialPageRoute(
           builder: (_) => const SearchPage(),
+          settings: settings,
+        );
+        case AppRoutes.myOrders:
+        return MaterialPageRoute(
+          builder: (_) =>  MyOrdersPage(),
           settings: settings,
         );
       case AppRoutes.home:

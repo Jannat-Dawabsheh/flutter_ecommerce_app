@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce_app/models/category_item._model.dart';
-import 'package:flutter_ecommerce_app/views/widgits/popular_item.dart';
+import 'package:flutter_ecommerce_app/views/widgets/popular_item.dart';
 
 import '../../models/product_item_model.dart';
 
