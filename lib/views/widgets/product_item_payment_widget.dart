@@ -29,7 +29,10 @@ class ProductItemPaymentWidget extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(item.name, style: Theme.of(context).textTheme.headlineSmall,),
+                    Text(item.name, style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium!
+                                    .copyWith(fontWeight: FontWeight.bold)),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -56,7 +59,10 @@ class ProductItemPaymentWidget extends StatelessWidget {
                         ),
                         Text(
                           "\$${item.price}",
-                          style:Theme.of(context).textTheme.titleMedium,
+                          style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium!
+                                    .copyWith(fontWeight: FontWeight.bold)
                           ),
                       ],
                     )

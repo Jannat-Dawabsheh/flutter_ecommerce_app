@@ -4,4 +4,5 @@ class AppRoutes{
   static const String SearchPage='/Search_Page';
   static const String myOrders='/My_Orders';
   static const String payment='/payment';
+  static const String address='/address';
 }

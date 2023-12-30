@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecommerce_app/models/product_item_model.dart';
 import 'package:flutter_ecommerce_app/utils/app_routes.dart';
+import 'package:flutter_ecommerce_app/view_models/address_cubit/address_cubit.dart';
 import 'package:flutter_ecommerce_app/view_models/favorite_cubit/favorite_cubit.dart';
 import 'package:flutter_ecommerce_app/view_models/payment_cubit/payment_cubit.dart';
 import 'package:flutter_ecommerce_app/view_models/product_cubit/product_cubit.dart';
+import 'package:flutter_ecommerce_app/views/pages/address_page.dart';
 import 'package:flutter_ecommerce_app/views/pages/custom_buttom_navbar.dart';
 import 'package:flutter_ecommerce_app/views/pages/home_page.dart';
 import 'package:flutter_ecommerce_app/views/pages/payment_page.dart';
@@ -62,11 +64,24 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
             create: (context) {
-              final cubit= PaymentCubit();
+              final cubit = PaymentCubit();
               cubit.getPaymentViewData();
               return cubit;
             },
             child: const PaymentPage(),
+          ),
+          settings: settings,
+        );
+
+      case AppRoutes.address:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) {
+              final cubit = AddressCubit();
+              cubit.getAddressList();
+              return cubit;
+            },
+            child: AddressPage(),
           ),
           settings: settings,
         );
