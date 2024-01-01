@@ -9,6 +9,7 @@ import 'package:flutter_ecommerce_app/view_models/product_cubit/product_cubit.da
 import 'package:flutter_ecommerce_app/views/pages/address_page.dart';
 import 'package:flutter_ecommerce_app/views/pages/custom_buttom_navbar.dart';
 import 'package:flutter_ecommerce_app/views/pages/home_page.dart';
+import 'package:flutter_ecommerce_app/views/pages/login_page.dart';
 import 'package:flutter_ecommerce_app/views/pages/payment_page.dart';
 import 'package:flutter_ecommerce_app/views/pages/product_details_page.dart';
 import 'package:flutter_ecommerce_app/views/pages/search_page.dart';
@@ -83,6 +84,11 @@ class AppRouter {
             },
             child: AddressPage(),
           ),
+          settings: settings,
+        );
+        case AppRoutes.login:
+        return MaterialPageRoute(
+          builder: (_) => const LoginPage(),
           settings: settings,
         );
       case AppRoutes.home:
