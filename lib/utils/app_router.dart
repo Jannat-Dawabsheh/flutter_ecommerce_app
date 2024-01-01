@@ -7,6 +7,7 @@ import 'package:flutter_ecommerce_app/view_models/favorite_cubit/favorite_cubit.
 import 'package:flutter_ecommerce_app/view_models/payment_cubit/payment_cubit.dart';
 import 'package:flutter_ecommerce_app/view_models/product_cubit/product_cubit.dart';
 import 'package:flutter_ecommerce_app/views/pages/address_page.dart';
+import 'package:flutter_ecommerce_app/views/pages/crerate_account_page.dart';
 import 'package:flutter_ecommerce_app/views/pages/custom_buttom_navbar.dart';
 import 'package:flutter_ecommerce_app/views/pages/home_page.dart';
 import 'package:flutter_ecommerce_app/views/pages/login_page.dart';
@@ -91,6 +92,13 @@ class AppRouter {
           builder: (_) => const LoginPage(),
           settings: settings,
         );
+
+        case AppRoutes.createAccountPage:
+        return MaterialPageRoute(
+          builder: (_) => const CreateAccountPage(),
+          settings: settings,
+        );
+
       case AppRoutes.home:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
