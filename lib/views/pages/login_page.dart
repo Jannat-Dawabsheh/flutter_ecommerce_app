@@ -5,6 +5,7 @@ import 'package:flutter_ecommerce_app/views/widgets/login_social_item.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../utils/app_routes.dart';
+import '../widgets/forget_password_model_sheet.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -138,7 +139,10 @@ class _LoginPageState extends State<LoginPage> {
                    Align(
                     alignment: Alignment.centerRight,
                      child: TextButton(
-                      onPressed: (){}, 
+                      onPressed: ()=>showModalBottomSheet(
+                        context: context, 
+                        builder: (context)=> forgetPasswordModelSheet(),
+                        ), 
                       child: Text("forget password?", style: Theme.of(context).textTheme.titleMedium!.copyWith(
                       color: AppColors.primary,
                                    ),),
