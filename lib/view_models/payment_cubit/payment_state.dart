@@ -25,6 +25,16 @@ final class PaymentError extends PaymentState{
  });
 }
 
+final class PaymentMethodChosen extends PaymentState{
+
+ final String paymentMethodId;
+ const PaymentMethodChosen({
+  required this.paymentMethodId,
+ });
+}
+
+
+
 
 
 

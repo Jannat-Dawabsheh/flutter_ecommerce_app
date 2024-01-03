@@ -21,4 +21,8 @@ class PaymentCubit extends Cubit<PaymentState> {
        );
     });
   }
+
+  void choosePaymentMethod(String PaymentMethodId){
+    emit(PaymentMethodChosen(paymentMethodId: PaymentMethodId));
+  }
 }

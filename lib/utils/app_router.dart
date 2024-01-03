@@ -15,6 +15,7 @@ import 'package:flutter_ecommerce_app/views/pages/payment_page.dart';
 import 'package:flutter_ecommerce_app/views/pages/product_details_page.dart';
 import 'package:flutter_ecommerce_app/views/pages/search_page.dart';
 
+import '../views/pages/add_payment_page.dart';
 import '../views/pages/my_orders_page.dart';
 
 /*
@@ -104,6 +105,15 @@ class AppRouter {
           builder: (_) => BlocProvider(
             create: (context) => FavoriteCubit(),
             child: CustomBottomNavbar(),
+          ),
+          settings: settings,
+        );
+
+        case AppRoutes.addPaymentCard:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => PaymentCubit(),
+            child: AddPaymentCard(),
           ),
           settings: settings,
         );

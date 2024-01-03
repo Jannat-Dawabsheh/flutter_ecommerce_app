@@ -8,6 +8,8 @@ import 'package:flutter_ecommerce_app/view_models/payment_cubit/payment_cubit.da
 import 'package:flutter_ecommerce_app/views/pages/address_page.dart';
 import 'package:flutter_ecommerce_app/views/widgets/product_item_payment_widget.dart';
 
+import '../widgets/payment_model_bottom_sheet.dart';
+
 class PaymentPage extends StatelessWidget {
   const PaymentPage({super.key});
   
@@ -20,6 +22,7 @@ class PaymentPage extends StatelessWidget {
       ),
       body: BlocBuilder<PaymentCubit, PaymentState>(
         bloc:BlocProvider.of<PaymentCubit>(context),
+        buildWhen: (previous, current) => current is PaymentLoaded|| current is PaymentLoading|| current is PaymentError,
         builder: (context, state) {
           if(state is PaymentLoading){
           return const Center(
@@ -101,7 +104,15 @@ class PaymentPage extends StatelessWidget {
                   buildInlineHeadlines(context: context, title: 'Payment Methods'),
                   const SizedBox(height: 16,),
                   InkWell(
-                    onTap: () {},
+                    onTap: ()=>showModalBottomSheet(
+                      useSafeArea: true,
+                      isScrollControlled: true,
+                      context: context, 
+                      builder: (ctx)=> BlocProvider.value(
+                        value:BlocProvider.of<PaymentCubit>(context),
+                        child: PaymentModelBottomSheet(),
+                      ),
+                      ),
                     child: Container(
                       width: double.infinity,
                       height: 100,
