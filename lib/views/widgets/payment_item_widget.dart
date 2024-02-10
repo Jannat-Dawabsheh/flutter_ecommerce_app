@@ -47,7 +47,7 @@ class PaymentItemWidget extends StatelessWidget {
                             groupValue: state is PaymentMethodChosen?state.paymentMethodId:null, 
                             onChanged:(value){
                               cubit.choosePaymentMethod(value!);
-                              debugPrint(value);
+                              
                             }
                               
                             );

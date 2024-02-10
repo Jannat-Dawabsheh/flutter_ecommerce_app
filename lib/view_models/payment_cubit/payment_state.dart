@@ -28,7 +28,8 @@ final class PaymentError extends PaymentState{
 final class PaymentMethodChosen extends PaymentState{
 
  final String paymentMethodId;
- const PaymentMethodChosen({
+ final PaymentMethodModel? chosedCard;
+ const PaymentMethodChosen(this.chosedCard, {
   required this.paymentMethodId,
  });
 }

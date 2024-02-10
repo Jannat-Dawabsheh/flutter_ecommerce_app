@@ -2,6 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_ecommerce_app/models/product_item_model.dart';
 
+import '../../models/payment_method_model.dart';
+
 part 'payment_state.dart';
 
 class PaymentCubit extends Cubit<PaymentState> {
@@ -23,6 +25,8 @@ class PaymentCubit extends Cubit<PaymentState> {
   }
 
   void choosePaymentMethod(String PaymentMethodId){
-    emit(PaymentMethodChosen(paymentMethodId: PaymentMethodId));
+    final PaymentMethodModel chosedCard;
+    chosedCard=savedCards.where((element) => element.id==PaymentMethodId,).toList()[0];
+    emit(PaymentMethodChosen(paymentMethodId: PaymentMethodId,chosedCard ));
   }
 }

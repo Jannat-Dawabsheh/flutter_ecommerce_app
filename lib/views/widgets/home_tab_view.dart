@@ -14,10 +14,14 @@ class HomeTabView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // for(final product in dummyProducts){
+    //   BlocProvider.of<HomeCubitCubit>(context).addProduct(product);
+    // }
     return BlocBuilder<HomeCubitCubit,HomeCubitState>(
       bloc: BlocProvider.of<HomeCubitCubit>(context),
       builder: (context, state) {
         if(state is HomeLoading){
+          print("loading");
           return const Center(
             child: CircularProgressIndicator.adaptive(),
           );
@@ -26,69 +30,75 @@ class HomeTabView extends StatelessWidget {
             child: Text(state.message),
           );
         }else if(state is HomeLoaded){
-        return SingleChildScrollView(
-          child: Column(
-            children: [
-              FlutterCarousel(
-                options: CarouselOptions(
-                  height: 200.0,
-                  showIndicator: true,
-                  slideIndicator: CircularWaveSlideIndicator(),
-                ),
-                items: state.carouselItems.map((item) {
-                  return Padding(
-                    padding: const EdgeInsets.only(right: 20.0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(16),
-                      child: CachedNetworkImage(
-                        imageUrl: item.imgUrl,
-                        fit: BoxFit.fill,
-                        placeholder: (context, url) => const Center(
-                          child: CircularProgressIndicator.adaptive(),
-                        ),
-                        errorWidget: (context, url, error) =>
-                            const Icon(Icons.error),
-                      ),
-                    ),
-                  );
-                }).toList(),
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    'New Arrivals',
-                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                          fontWeight: FontWeight.w600,
-                        ),
+        return RefreshIndicator(
+          onRefresh:()async{
+            await BlocProvider.of<HomeCubitCubit>(context).getHomeData();
+          },
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                FlutterCarousel(
+                  options: CarouselOptions(
+                    height: 200.0,
+                    showIndicator: true,
+                    slideIndicator: CircularWaveSlideIndicator(),
                   ),
-                  TextButton(
-                    onPressed: () {},
-                    child: const Text('See All'),
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              GridView.builder(
-                itemCount: state.products.length,
-                shrinkWrap: true,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, crossAxisSpacing: 8, mainAxisSpacing: 8),
-                itemBuilder: (context, index) =>
-                    InkWell(
-                      onTap: (){
-                        Navigator.of(context,rootNavigator: true).pushNamed(AppRoutes.productDetails, arguments: state.products[index] );
-                      },
-                      child: ProductItem(productItem: state.products[index])
+                  items: state.carouselItems.map((item) {
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 20.0),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(16),
+                        child: CachedNetworkImage(
+                          imageUrl: item.imgUrl,
+                          fit: BoxFit.fill,
+                          placeholder: (context, url) => const Center(
+                            child: CircularProgressIndicator.adaptive(),
+                          ),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
+                        ),
                       ),
-              )
-            ],
+                    );
+                  }).toList(),
+                ),
+                const SizedBox(
+                  height: 24,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'New Arrivals',
+                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: const Text('See All'),
+                    )
+                  ],
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                GridView.builder(
+                  itemCount: state.products.length,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2, crossAxisSpacing: 8, mainAxisSpacing: 8),
+                  itemBuilder: (context, index) =>
+                      InkWell(
+                        onTap: (){
+                          Navigator.of(context,rootNavigator: true).pushNamed(AppRoutes.productDetails, arguments: state.products[index] );
+                        },
+                        child: ProductItem(productItem: state.products[index])
+                        ),
+                )
+              ],
+            ),
           ),
         );
         }else {
@@ -98,3 +108,4 @@ class HomeTabView extends StatelessWidget {
     );
   }
 }
+

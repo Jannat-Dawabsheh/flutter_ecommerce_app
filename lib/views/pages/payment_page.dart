@@ -2,12 +2,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecommerce_app/models/address_item_model.dart';
+import 'package:flutter_ecommerce_app/models/payment_method_model.dart';
 import 'package:flutter_ecommerce_app/utils/app_colors.dart';
 import 'package:flutter_ecommerce_app/utils/app_routes.dart';
 import 'package:flutter_ecommerce_app/view_models/payment_cubit/payment_cubit.dart';
 import 'package:flutter_ecommerce_app/views/pages/address_page.dart';
 import 'package:flutter_ecommerce_app/views/widgets/product_item_payment_widget.dart';
 
+import '../widgets/payment_item_widget.dart';
 import '../widgets/payment_model_bottom_sheet.dart';
 
 class PaymentPage extends StatelessWidget {
@@ -53,10 +55,7 @@ class PaymentPage extends StatelessWidget {
                         color: ModalRoute.of(context)?.settings.arguments==null?AppColors.grey.withOpacity(0.2):Colors.transparent,
                         borderRadius: BorderRadius.circular(16),
                       ),
-                      child: ModalRoute.of(context)?.settings.arguments==null?
-                      Center(
-                        child: Text('Add Address'),
-                      ):
+                      child: ModalRoute.of(context)?.settings.arguments!=null && ModalRoute.of(context)?.settings.arguments is AddressItemModel? 
                       Row(
                         children: [
                           ClipRRect(
@@ -85,7 +84,12 @@ class PaymentPage extends StatelessWidget {
                             ],
                           )
                         ],
-                      ),
+                      )
+                      :Center(
+                        child: Text('Add Address'),
+                       ),
+                       
+                      
                     ),
                   ),
                   const SizedBox(height: 16,),
@@ -122,9 +126,14 @@ class PaymentPage extends StatelessWidget {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),
-                        child: Center(
-                          child: Text('Add Payment Method'),
-                        ),
+                        child: ModalRoute.of(context)?.settings.arguments!=null && ModalRoute.of(context)?.settings.arguments is PaymentMethodModel? 
+                        Text(((ModalRoute.of(context)?.settings.arguments as PaymentMethodModel)).cardHolderName)
+                        :Center(
+                        child: Text('Add Payment Method'),
+                      )
+                      
+
+                        
                       ),
                     ),
                   ),
