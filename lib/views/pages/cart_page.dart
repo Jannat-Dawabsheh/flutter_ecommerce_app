@@ -26,8 +26,9 @@ class CartPage extends StatelessWidget {
             child: Text(state.message),
           );
         }else if(state is CartLoaded){
-          return SingleChildScrollView(
-            child: Column(
+          return RefreshIndicator(
+            onRefresh: () => BlocProvider.of<CartCubit>(context).getCartItems(),
+            child: ListView(
               children: [
                 ListView.builder(
                   shrinkWrap: true,
@@ -35,11 +36,11 @@ class CartPage extends StatelessWidget {
                 itemCount: state.cartItems.length,
                 itemBuilder: (context,index){
                   final item =state.cartItems[index];
-                  return CartItemWidget(productItem: item);
+                  return CartItemWidget(addToCartItem: item);
                 },
                 ),
                 const SizedBox(height: 24,),
-                buildTotalAndSubtotalItem(context,'Subtotal', state.subTotal),
+                buildTotalAndSubtotalItem(context,'Subtotal', state.subtotal),
                 const SizedBox(height: 8,),
                 buildTotalAndSubtotalItem(context,'Shipping', 10),
                 const SizedBox(height: 16,),
@@ -47,10 +48,10 @@ class CartPage extends StatelessWidget {
                   length: size.width-32,
                   dashLength: 12,
                   dashColor: AppColors.grey,
- 
+                         
                 ),
                 const SizedBox(height: 16,),
-                buildTotalAndSubtotalItem(context,'Total Amount', state.subTotal+10),
+                buildTotalAndSubtotalItem(context,'Total Amount', state.subtotal+10),
                 const SizedBox(height: 32,),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal:16.0),

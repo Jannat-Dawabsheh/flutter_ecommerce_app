@@ -1,42 +1,79 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter_ecommerce_app/models/add_to_cart_model.dart';
 import 'package:flutter_ecommerce_app/models/product_item_model.dart';
+import 'package:flutter_ecommerce_app/services/cart_services.dart';
 import 'package:flutter_ecommerce_app/views/widgets/product_item.dart';
 
 part 'cart_state.dart';
 
 class CartCubit extends Cubit<CartState> {
   CartCubit() : super(CartInitial());
+  final cartServices = CartServicesImpl();
 
-  void getCartItems(){
+  Future<void> getCartItems() async {
     emit(CartLoading());
-    final cartItem=dummyProducts.where((element) => element.isAddedToCart==true).toList();
-    final subTotal= cartItem.fold<double>(0, (sum, element) => sum+element.price);
-    Future.delayed(const Duration(seconds: 1),(){
-      emit(CartLoaded(cartItems:cartItem, subTotal: subTotal ));
-    });
-  }
-  
-  void increment(String productId){
-    final index=dummyProducts.indexWhere((element) => element.id==productId);
-    dummyProducts[index]=dummyProducts[index].copyWith(quantity:dummyProducts[index].quantity+1);
-    emit(QuantityCounterLoaded(value: dummyProducts[index].quantity, productId:productId));
-  }
-
-   void decrement(String productId){
-    final index=dummyProducts.indexWhere((element) => element.id==productId);
-    dummyProducts[index]=dummyProducts[index].copyWith(quantity:dummyProducts[index].quantity-1);
-    emit(QuantityCounterLoaded(value: dummyProducts[index].quantity, productId:productId));
+    try {
+      final cartItems = await cartServices.getCartItems();
+    final subTotal = cartItems.fold<double>(0, (sum, item) => sum + (item.product.price * item.quantity));
+    emit(CartLoaded(
+        cartItems: cartItems,
+        subtotal: subTotal,
+      ));
+    } catch (e) {
+      emit(
+        CartError(message: e.toString()),
+      );
+    }
   }
 
-  void removeFromCart(String productId){
-    emit(CartLoading());
-    final index=dummyProducts.indexWhere((element) => element.id==productId);
-    dummyProducts[index]=dummyProducts[index].copyWith(isAddedToCart:false, quantity: 0, size: null);
-    emit(QuantityCounterLoaded(value: dummyProducts[index].quantity, productId:productId));
-    final cartItem=dummyProducts.where((element) => element.isAddedToCart==true).toList();
-    final subTotal= cartItem.fold<double>(0, (sum, element) => sum+element.price);
-    Future.delayed(const Duration(seconds: 1),(){
-      emit(CartLoaded(cartItems: cartItem, subTotal: subTotal));
-    });
+  // void removeFromCart(String productId) {
+  //   emit(CartLoading());
+  //   final index = dummyProducts.indexWhere((item) => item.id == productId);
+  //   dummyProducts[index] = dummyProducts[index].copyWith(
+  //     isAddedToCart: false,
+  //     quantity: 0,
+  //     size: null,
+  //   );
+  //   final cartItems =
+  //       dummyProducts.where((item) => item.isAddedToCart == true).toList();
+  //   final subTotal = cartItems.fold<double>(0, (sum, item) => sum + item.price);
+  //   Future.delayed(const Duration(seconds: 1), () {
+  //     emit(CartLoaded(
+  //       cartItems: cartItems,
+  //       subtotal: subTotal,
+  //     ));
+  //   });
+  // }
+
+  void increment(String productId) {
+    final index = dummyProducts.indexWhere((item) => item.id == productId);
+    dummyProducts[index] = dummyProducts[index].copyWith(
+      quantity: dummyProducts[index].quantity + 1,
+    );
+    emit(
+      QuantityCounterLoaded(
+        value: dummyProducts[index].quantity,
+        productId: productId,
+      ),
+    );
+    // emit(CartLoaded(
+    //     cartItems: dummyProducts
+    //         .where((item) => item.isAddedToCart == true)
+    //         .toList()));
+  }
+
+  void decrement(String productId) {
+    final index = dummyProducts.indexWhere((item) => item.id == productId);
+    dummyProducts[index] = dummyProducts[index].copyWith(
+      quantity: dummyProducts[index].quantity - 1,
+    );
+    emit(QuantityCounterLoaded(
+      value: dummyProducts[index].quantity,
+      productId: productId,
+    ));
+    // emit(CartLoaded(
+    //     cartItems: dummyProducts
+    //         .where((item) => item.isAddedToCart == true)
+    //         .toList()));
   }
 }

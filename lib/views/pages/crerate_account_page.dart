@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecommerce_app/utils/app_colors.dart';
 import 'package:flutter_ecommerce_app/utils/app_routes.dart';
+import 'package:flutter_ecommerce_app/view_models/auth_cubit/auth_cubit.dart';
 import 'package:flutter_ecommerce_app/views/widgets/login_social_item.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -16,9 +18,9 @@ class CreateAccountPage extends StatefulWidget {
 
 class _CreateAccountPageState extends State<CreateAccountPage> {
   late final GlobalKey<FormState> _formKey;
-  late final TextEditingController _emailControler;
-  late final TextEditingController _passwordControler;
-  late final TextEditingController _usernameControler;
+  late final TextEditingController _emailController;
+  late final TextEditingController _passwordController;
+  late final TextEditingController _usernameController;
   late FocusNode _emailFocusNode,_passwordFocusNode,_usernameFocusNode;
   String? _email,_password,_username;
   bool visibility=false;
@@ -26,32 +28,33 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
   @override
   void initState() {
     _formKey=GlobalKey<FormState>();
-    _emailControler=TextEditingController();
-    _passwordControler=TextEditingController();
+    _emailController=TextEditingController();
+    _passwordController=TextEditingController();
     _emailFocusNode=FocusNode();
     _passwordFocusNode=FocusNode();
-    _usernameControler=TextEditingController();
+    _usernameController=TextEditingController();
     _usernameFocusNode=FocusNode();
     super.initState();
   }
   @override
   void dispose() {
-    _emailControler.dispose();
-    _passwordControler.dispose();
-    _usernameControler.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _usernameController.dispose();
     super.dispose();
   }
 
-  void createAccount(){
-  debugPrint("Email: $_email, Password:$_password, username: $_username");
-  if(_formKey.currentState!.validate()){
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Create account Success'),),
-    );
-    Navigator.of(context).pushNamed(AppRoutes.login);
-  }
+  void createAccount() async{
+   if (_formKey.currentState!.validate()) {
+      await BlocProvider.of<AuthCubit>(context).register(
+        _emailController.text,
+        _passwordController.text,
+        _usernameController.text,
+      );
+    }
     
   }
+
   
 static final RegExp alphaExp = RegExp('[^a-zA-Z ]'); 
 
@@ -80,7 +83,7 @@ static final RegExp alphaExp = RegExp('[^a-zA-Z ]');
                   ),),
                   const SizedBox(height: 8,),
                   TextFormField(
-                    controller: _usernameControler,
+                    controller: _usernameController,
                     onChanged: (value) => _username=value,
                     validator: (value) {
                       if(value==null || value.isEmpty){
@@ -110,7 +113,7 @@ static final RegExp alphaExp = RegExp('[^a-zA-Z ]');
                   ),),
                   const SizedBox(height: 8,),
                   TextFormField(
-                    controller: _emailControler,
+                    controller: _emailController,
                     onChanged: (value) => _email=value,
                     validator: (value) {
                       if(value==null || value.isEmpty){
@@ -141,7 +144,7 @@ static final RegExp alphaExp = RegExp('[^a-zA-Z ]');
                   ),),
                   const SizedBox(height: 8,),
                   TextFormField(
-                    controller: _passwordControler,
+                    controller: _passwordController,
                     onChanged: (value) => _password=value,
                     focusNode: _passwordFocusNode,
                     textInputAction: TextInputAction.done,
@@ -180,7 +183,43 @@ static final RegExp alphaExp = RegExp('[^a-zA-Z ]');
                    SizedBox(
                       width: double.infinity,
                       height: 50,
-                      child: ElevatedButton(
+                      child: BlocConsumer<AuthCubit, AuthState>(
+                      bloc: BlocProvider.of<AuthCubit>(context),
+                        listenWhen: (previous, current) =>
+                            current is AuthSuccess || current is AuthError,
+                        listener: (context, state) {
+                          if (state is AuthSuccess) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Register Success!'),
+                              ),
+                            );
+                            Navigator.of(context).pushNamed(AppRoutes.home);
+                          } else if (state is AuthError) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(state.message),
+                              ),
+                            );
+                          }
+                        },
+                        buildWhen: (previous, current) =>
+                            current is AuthLoading || current is AuthError,
+                      builder: (context, state) {
+                        if (state is AuthLoading) {
+                            return ElevatedButton(
+                              onPressed: null,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    Theme.of(context).primaryColor,
+                                foregroundColor: AppColors.white,
+                              ),
+                              child: const Center(
+                                child: CircularProgressIndicator.adaptive(),
+                              ),
+                            );
+                          }
+                        return  ElevatedButton(
                       onPressed:createAccount, 
                       child: Text("Create Account",style: Theme.of(context).textTheme.titleMedium!.copyWith(
                       color: AppColors.white,
@@ -190,7 +229,10 @@ static final RegExp alphaExp = RegExp('[^a-zA-Z ]');
                         backgroundColor: AppColors.primary,
                         foregroundColor: AppColors.white,
                       ),
-                      ),  
+                      ); 
+                      },
+                    ),
+                     
                     ),
               
                     const SizedBox(height: 16,),
