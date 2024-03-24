@@ -47,7 +47,7 @@ class CartItemWidget extends StatelessWidget {
                             color: AppColors.red.withOpacity(0.3),
                             shape: BoxShape.circle),
                         child: IconButton(
-                          onPressed: (){},//=>cartCubit.removeFromCart(addToCartItem.id),
+                          onPressed: ()=>cartCubit.removeFromCart(addToCartItem.id),
                           icon: Icon(Icons.delete_outline),
                           color: AppColors.red,
                         ))),

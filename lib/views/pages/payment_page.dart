@@ -81,29 +81,33 @@ class PaymentPage extends StatelessWidget {
                                     .labelLarge!
                                     .copyWith(color: AppColors.grey),
                                     ),
-                            ],
-                          )
-                        ],
-                      )
-                      :Center(
-                        child: Text('Add Address'),
-                       ),
+                                  ],
+                                )
+                              ],
+                            )
+                            :Center(
+                              child: Text('Add Address'),
+                            ),
                        
                       
                     ),
                   ),
                   const SizedBox(height: 16,),
-                  buildInlineHeadlines(
-                      context: context, title: 'Products', productNumbers: state.cartItems.length),
-                  const SizedBox(height: 8,),
-                  ListView.builder(
-                    itemCount:state.cartItems.length ,
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder:(context,index){
-                      final item=state.cartItems[index];
-                      return ProductItemPaymentWidget(item: item,);
-                        } ),
+                  Column(
+                    children: [
+                      buildInlineHeadlines(
+                          context: context, title: 'Products', productNumbers: state.cartItems.length),
+                      const SizedBox(height: 8,),
+                      ListView.builder(
+                        itemCount:state.cartItems.length ,
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder:(context,index){
+                          final item=state.cartItems[index];
+                          return ProductItemPaymentWidget(item: item,);
+                            } ),
+                    ],
+                  ),
                   const SizedBox(height: 16,),
                   buildInlineHeadlines(context: context, title: 'Payment Methods'),
                   const SizedBox(height: 16,),
@@ -126,17 +130,35 @@ class PaymentPage extends StatelessWidget {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),
-                        child: ModalRoute.of(context)?.settings.arguments!=null && ModalRoute.of(context)?.settings.arguments is PaymentMethodModel? 
-                        Text(((ModalRoute.of(context)?.settings.arguments as PaymentMethodModel)).cardHolderName)
-                        :Center(
-                        child: Text('Add Payment Method'),
+                        child:
+  
+                        ModalRoute.of(context)?.settings.arguments!=null && ModalRoute.of(context)?.settings.arguments is PaymentMethodModel? 
+                        //Text(((ModalRoute.of(context)?.settings.arguments as PaymentMethodModel).cardNumber))
+                        ListTile(
+                                onTap:() {
+                                  
+                                },
+                              leading: ClipRRect(
+                                borderRadius: BorderRadius.circular(16),
+                                child: CachedNetworkImage(
+                                  imageUrl: (ModalRoute.of(context)?.settings.arguments as PaymentMethodModel).imgUrl,
+                                  width: 100,
+                                  height: 100,
+                                  ),
+                              ),
+                              title: Text( (ModalRoute.of(context)?.settings.arguments as PaymentMethodModel).name, style: Theme.of(context).textTheme.titleMedium,),
+                              subtitle: Text((ModalRoute.of(context)?.settings.arguments as PaymentMethodModel).cardNumber, style: Theme.of(context).textTheme.titleMedium!.copyWith(color: AppColors.grey)),
+                               trailing:Icon(Icons.arrow_forward_ios_outlined)
+                              
+                              ):Center(
+                                child: Text('Add Payment Method'),
+                              )
+                     
                       )
-                      
-
-                        
+  
                       ),
                     ),
-                  ),
+                  
                  const SizedBox(height: 16,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -160,7 +182,9 @@ class PaymentPage extends StatelessWidget {
                     width: double.infinity,
                     height: 50,
                     child: ElevatedButton(
-                    onPressed: (){}, 
+                    onPressed: (){
+                      Navigator.pop(context);
+                    }, 
                     child: Text("Checkout Now"),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,

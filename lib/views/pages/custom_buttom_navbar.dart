@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce_app/services/auth_services.dart';
 import 'package:flutter_ecommerce_app/view_models/cart_cubit/cart_cubit.dart';
 import 'package:flutter_ecommerce_app/view_models/favorite_cubit/favorite_cubit.dart';
 import 'package:flutter_ecommerce_app/view_models/home_cubit/home_cubit_cubit.dart';
@@ -29,6 +30,8 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
         _currentIndex = _controller.index;
       });
     });
+    
+
     super.initState();
   }
 
@@ -99,14 +102,14 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
           child: CircleAvatar(
             radius: 20,
             backgroundImage: CachedNetworkImageProvider(
-                "https://tricky-photoshop.com/wp-content/uploads/2017/08/final-1.png"),
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaizazwQtqYtxIz6-5scSWz97PERGqBBDpZA&usqp=CAU"),
           ),
         ),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Hi, Jonathan',
+              'Hello!',
               style: Theme.of(context)
                   .textTheme
                   .labelLarge!

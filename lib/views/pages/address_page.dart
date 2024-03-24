@@ -165,7 +165,7 @@ class AddressPage extends StatelessWidget {
                         width: double.infinity,
                         height: 50,
                         child: ElevatedButton(
-                          onPressed: ()=> Navigator.of(context,rootNavigator: true).pushNamed(AppRoutes.payment, arguments: state.item ),
+                          onPressed: () {Navigator.of(context).pop(); Navigator.of(context,rootNavigator: true).pushReplacementNamed(AppRoutes.payment, arguments: state.item );}, 
                           child: Text("Confirm"),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.primary,

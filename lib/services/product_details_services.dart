@@ -34,5 +34,15 @@ class ProductDetailsServicesImpl implements ProductDetailsServices {
       ),
       data: addToCartModel.toMap(),
     );
+    
+  }
+
+  @override
+  Future<void> deleteFromCart(String cartId) async {
+    final currentUser = await authServices.getUser();
+     print("delete...");
+    await firestore.deleteData(path: ApiPath.deleteFromCart(currentUser!.uid, cartId));
+    
+    
   }
 }

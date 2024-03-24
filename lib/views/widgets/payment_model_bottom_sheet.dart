@@ -55,11 +55,12 @@ class PaymentModelBottomSheet extends StatelessWidget {
                   width: double.infinity,
                   height: 50,
                   child: ElevatedButton(
+     
                     onPressed: () {
-                    Navigator.pop(context, state is PaymentMethodChosen?state.chosedCard:null);
+                   // Navigator.pop(context, state is PaymentMethodChosen?state.chosedCard:null);
                     debugPrint( state is PaymentMethodChosen?state.chosedCard?.cardNumber:'null');
-                      //   Navigator.of(context, rootNavigator: true).pushNamed(
-                      // AppRoutes.payment,arguments: state is PaymentMethodChosen?state.chosedCard:null,
+                        Navigator.of(context, rootNavigator: true).pushNamed(
+                       AppRoutes.payment,arguments: state is PaymentMethodChosen?state.chosedCard:null);
                     },
                     child: Text("Confirm Payment",
                         style: Theme.of(context)

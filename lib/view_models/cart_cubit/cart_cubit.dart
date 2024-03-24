@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter_ecommerce_app/models/add_to_cart_model.dart';
 import 'package:flutter_ecommerce_app/models/product_item_model.dart';
 import 'package:flutter_ecommerce_app/services/cart_services.dart';
+import 'package:flutter_ecommerce_app/services/product_details_services.dart';
 import 'package:flutter_ecommerce_app/views/widgets/product_item.dart';
 
 part 'cart_state.dart';
@@ -9,7 +10,7 @@ part 'cart_state.dart';
 class CartCubit extends Cubit<CartState> {
   CartCubit() : super(CartInitial());
   final cartServices = CartServicesImpl();
-
+  final productDetailsServices = ProductDetailsServicesImpl();
   Future<void> getCartItems() async {
     emit(CartLoading());
     try {
@@ -26,24 +27,19 @@ class CartCubit extends Cubit<CartState> {
     }
   }
 
-  // void removeFromCart(String productId) {
-  //   emit(CartLoading());
-  //   final index = dummyProducts.indexWhere((item) => item.id == productId);
-  //   dummyProducts[index] = dummyProducts[index].copyWith(
-  //     isAddedToCart: false,
-  //     quantity: 0,
-  //     size: null,
-  //   );
-  //   final cartItems =
-  //       dummyProducts.where((item) => item.isAddedToCart == true).toList();
-  //   final subTotal = cartItems.fold<double>(0, (sum, item) => sum + item.price);
-  //   Future.delayed(const Duration(seconds: 1), () {
-  //     emit(CartLoaded(
-  //       cartItems: cartItems,
-  //       subtotal: subTotal,
-  //     ));
-  //   });
-  // }
+  Future<void> removeFromCart(String productId) async {
+     
+    emit(CartLoading());
+    try{
+    await productDetailsServices.deleteFromCart(productId);
+    final cartItems = await cartServices.getCartItems();
+    emit(CartLoaded(cartItems:cartItems, subtotal:  cartItems.fold<double>(0, (sum, item) => sum + (item.product.price * item.quantity) )));
+    }catch (e) {
+      emit(
+        CartError(message: e.toString()),
+      );
+    }
+  }
 
   void increment(String productId) {
     final index = dummyProducts.indexWhere((item) => item.id == productId);

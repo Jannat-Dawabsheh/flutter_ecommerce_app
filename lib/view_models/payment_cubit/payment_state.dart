@@ -9,11 +9,12 @@ sealed class PaymentState {
 final class PaymentInitial extends PaymentState {}
 final class PaymentLoading extends PaymentState{}
 final class PaymentLoaded extends PaymentState{
- final List<ProductItemModel>cartItems;
+ //final List<ProductItemModel>cartItems;
  final double total;
+ final List<AddToCartModel> cartItems;
  const PaymentLoaded({
   required this.cartItems,
-   required this.total,
+  required this.total,
  });
 }
 
